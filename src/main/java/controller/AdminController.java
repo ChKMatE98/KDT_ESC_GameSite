@@ -2,6 +2,9 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Date;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -79,6 +82,13 @@ public class AdminController extends HttpServlet {
 				boolean isbanned = adao.isBan(id);
 				String sys_name = dto.getProfile();
 				request.setAttribute("sys_name", sys_name);
+				Timestamp signup_date = dto.getSignup_date();
+
+		        // 원하는 형식으로 날짜와 시간을 포맷합니다.
+		        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		        String formattedTimestamp = sdf.format(new Date(signup_date.getTime()));
+
+		        request.setAttribute("signup_date", formattedTimestamp);
 				request.setAttribute("dto", dto);
 				request.setAttribute("isbanned", isbanned);
 				request.getRequestDispatcher("/admin/userInfo.jsp").forward(request,response);

@@ -310,7 +310,7 @@
                         <c:otherwise>
                             <li class="headerli headerlogout"><a href="/logout.members">로그아웃</a>
                             </li>
-                            <li class="headerli"><a href="/showBoardList.board?cpage=1&searchText=">게시판</a></li>
+                            <li class="headerli"><a class="showBoardList" href="#" onclick='showBoardList()'>게시판</a></li>
                             <li class="headerli headerboard"><a href="/mypage.members">마이페이지</a></li>
                         </c:otherwise>
 
@@ -845,6 +845,26 @@
         // console.log(response);
         // window.scrollTo(0, response);
     });
+    function showBoardList() {
+        $.ajax({
+            url: "/isuserban.admin",
+            type: "GET",
+            data: {
+                loginID: loginID
+            }, // loginID를 사용하여 전달합니다.
+            success: function(istrue) {
+                if (istrue == "true") {
+                    alert("사용하고 계신 아이디가 벤되었습니다.\n게시판 사용이 제한됩니다.")
+                } else {
+                    window.location.href = "/showBoardList.board?cpage=1&searchText=";
+                }
+
+            },
+            error: function() {
+                alert("게시판을 시작하는 데 문제가 발생했습니다.");
+            }
+        });
+    };
 </script>
 
 </html>
